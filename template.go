@@ -6,18 +6,30 @@ import "log"
 import "os"
 
 func main() {
-	inFile, err := os.Open(os.Args[1])
-	if err != nil {
-		log.Fatal(err)
+	for line := range inputLines() {
 	}
+}
 
-	scanner := bufio.NewScanner(inFile)
-	for scanner.Scan() {
-		line := scanner.Text()
+func inputLines() <-chan string {
+	ch := make(chan string)
 
+	go func() {
+		inFile, err := os.Open(os.Args[1])
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	}
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
+		scanner := bufio.NewScanner(inFile)
+		for scanner.Scan() {
+			line := scanner.Text()
+			ch <- line
+		}
+		if err := scanner.Err(); err != nil {
+			log.Fatal(err)
+		}
+
+		close(ch)
+	}()
+
+	return ch
 }
