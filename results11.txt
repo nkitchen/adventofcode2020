@@ -1,0 +1,12 @@
+day11.2:
+
+real	0m1.394s
+user	0m1.521s
+sys	0m0.076s
+2047
+
+day11.2a:
+
+real	0m0.295s
+user	0m0.303s
+sys	0m0.028s
