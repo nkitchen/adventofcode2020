@@ -3,8 +3,8 @@ package main
 import "bufio"
 import "fmt"
 import "log"
+import "math/big"
 import "os"
-import "strconv"
 import "strings"
 
 // n_1, n_2, ..., n_k
@@ -31,8 +31,8 @@ func main() {
 	line1 := <-ch
 	_ = line1
 
-	nn := []int64{}
-	aa := []int64{}
+	nn := []*big.Int{}
+	aa := []*big.Int{}
 
 	line2 := <-ch
 	for i, s := range strings.Split(line2, ",") {
@@ -40,12 +40,15 @@ func main() {
 			continue
 		}
 
-		n, err := strconv.ParseInt(s, 10, 64)
-		if err != nil {
-			log.Fatal(err)
+		n := &big.Int{}
+		_, ok := n.SetString(s, 10)
+		if !ok {
+			log.Fatalf("Parse error for %q", s)
 		}
+		a := big.NewInt(-int64(i))
+		a.Mod(a, n)
 		nn = append(nn, n)
-		aa = append(aa, n - int64(i))
+		aa = append(aa, a)
 	}
 
 	if len(nn) < 2 {
@@ -54,42 +57,35 @@ func main() {
 
 	n1 := nn[0]
 	a1 := aa[0]
-	var t int64
+	t := &big.Int{}
 	for i := 1; i < len(nn); i++ {
 		n2 := nn[i]
 		a2 := aa[i]
 
-		m1, m2 := BézoutCoeffs(n1, n2)
-		t = a1*m2*n2 + a2*m1*n1
-		for t < 0 {
-			t += n1*n2
-		}
-		for t >= n1*n2 {
-			t -= n1*n2
+		//fmt.Printf("n1=%v\ta1=%v\tn2=%v\ta2=%v", n1, a1, n2, a2)
+
+		z := &big.Int{}
+		m1 := &big.Int{}
+		m2 := &big.Int{}
+		z.GCD(m1, m2, n1, n2)
+		if z.String() != "1" {
+			panic(z.String())
 		}
 
-		fmt.Printf("n1=%v a1=%v n2=%v a2=%v m1=%v m2=%v t=%v\n",
-		n1, a1, n2, a2, m1, m2, t)
-		n1 *= n2
+		mn2a1 := &big.Int{}
+		mn1a2 := &big.Int{}
+		mn2a1.Mul(m2, n2)
+		mn2a1.Mul(mn2a1, a1)
+		mn1a2.Mul(m1, n1)
+		mn1a2.Mul(mn1a2, a2)
+		t.Add(mn2a1, mn1a2)
+
+		n1.Mul(n1, n2)
+		t.Mod(t, n1)
 		a1 = t
+		//fmt.Printf("\tm1=%v\tm2=%v\tt=%v\n", m1, m2, t)
 	}
 	fmt.Println(t)
-}
-
-// From https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm
-func BézoutCoeffs(a, b int64) (int64, int64) {
-	rOld, r := a, b
-	sOld, s := int64(1), int64(0)
-	tOld, t := int64(0), int64(1)
-
-	for r != 0 {
-		q := rOld / r
-		rOld, r = r, rOld-q*r
-		sOld, s = s, sOld-q*s
-		tOld, t = t, tOld-q*t
-	}
-
-	return sOld, tOld
 }
 
 func inputLines() <-chan string {
