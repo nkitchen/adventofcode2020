@@ -1,0 +1,47 @@
+0: 8 11
+a: "a"
+aa: a a
+b: "b"
+bb: bb
+2: aba | baa
+3: 5 b | 16 a
+5: ab | [ab]a
+6: [ab]b
+7: b 5 | a 21
+8: 42
+9: ba[ab]b | bb[ab][ab] | abbb | aabb | aaa[ab][ab]
+10: a[ab]ab | bbbb | [ab]aaa | bbaa
+11: 42 31
+12: ba b | 19 a
+13: b 3 | a 12
+15: a | b
+16: [ab]a | bb
+17: b 2 | a 7
+18: [ab][ab]
+19: ba | bb
+20: bb | a[ab][ab]
+21: ba | ab
+23: a[ab]a | bbb
+24: ba
+25: a[ab]
+26: bbb | abb | aa[ab][ab]
+27: a[ab]b | b[ab][ab]
+28: [ab]aa | bba
+31: b 17 | a 13
+42: ba[ab]bb | bb[ab][ab]b | abbbb | aabbb | aaa[ab][ab]b | a[ab]aba | bbbba | [ab]aaaa | bbaaa
+
+abbbbbabbbaaaababbaabbbbabababbbabbbbbbabaaaa
+bbabbbbaabaabba
+babbbbaabbbbbabbbbbbaabaaabaaa
+aaabbbbbbaaaabaababaabababbabaaabbababababaaa
+bbbbbbbaaaabbbbaaabbabaaa
+bbbababbbbaaaaaaaabbababaaababaabab
+ababaaaaaabaaab
+ababaaaaabbbaba
+baabbaaaabbaaaababbaababb
+abbbbabbbbaaaababbbbbbaaaababb
+aaaaabbaabaaaaababaa
+aaaabbaaaabbaaa
+aaaabbaabbaaaaaaabbbabbbaaabbaabaaa
+babaaabbbaaabaababbaabababaaab
+aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba
