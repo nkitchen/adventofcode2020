@@ -1,0 +1,13 @@
+modulus M = 20201227
+
+card subject number s_c
+card loop size      n_c
+card public key     k_c = s_c ^ n_c mod M
+                        =   7 ^ n_c mod M
+
+door public key     k_d = s_d ^ n_d mod M
+                        =   7 ^ n_d mod M
+
+card encryption key e_c = k_d ^ n_c mod M
+                        = (7 ^ n_d) ^ n_c mod M
+			= 7 ^ (n_c * n_d) mod M
